@@ -711,40 +711,75 @@ render() {
 
 8.  ### When to use a Class Component over a Function Component?
 
-    After the addition of Hooks(i.e. React 16.8 onwards) it is always recommended to use Function components over Class components in React. Because you could use state, lifecycle methods and other features that were only available in class component present in function component too.
 
-    But even there are two reasons to use Class components over Function components.
+ Class Components:
+ 
+ 1.Legacy Codebases:
+ 
+ Consistency: If you are working on an existing codebase that predominantly uses class components, it may be beneficial to maintain consistency and use class components for new features.
 
-    1. If you need a React functionality whose Function component equivalent is not present yet, like Error Boundaries.
-    2. In older versions, If the component needs _state or lifecycle methods_ then you need to use class component.
+ 2. Error Boundaries:
+Error Handling: Currently, error boundaries can only be defined in class components. Error boundaries are used to catch JavaScript errors in their child component tree, log those errors, and display a fallback UI.
 
-    So the summary to this question is as follows:
+```javascript
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
 
-    **Use Function Components:**
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
 
-    - If you don't need state or lifecycle methods, and your component is purely presentational.
-    - For simplicity, readability, and modern code practices, especially with the use of React Hooks for state and side effects.
+  componentDidCatch(error, errorInfo) {
+    // You can also log the error to an error reporting service
+    logErrorToMyService(error, errorInfo);
+  }
 
-    **Use Class Components:**
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong.</h1>;
+    }
 
-    - If you need to manage state or use lifecycle methods.
-    - In scenarios where backward compatibility or integration with older code is necessary.
+    return this.props.children; 
+  }
+}
 
-    **Note:** You can also use reusable [react error boundary](https://github.com/bvaughn/react-error-boundary) third-party component without writing any class. i.e, No need to use class components for Error boundaries.
 
-    The usage of Error boundaries from the above library is quite straight forward.
+```
+Function Components with Hooks:
 
-    > **_Note when using react-error-boundary:_** ErrorBoundary is a client component. You can only pass props to it that are serializeable or use it in files that have a `"use client";` directive.
+1. Simplicity and Readability:
 
-    ```jsx
-    "use client";
+Cleaner Code: Function components are generally simpler and more concise. Hooks allow you to use state and other React features without writing a class.
 
-    import { ErrorBoundary } from "react-error-boundary";
+2. Side Effects:
 
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-      <ExampleApplication />
-    </ErrorBoundary>;
-    ```
+useEffect: With useEffect, you can perform side effects in function components, which used to be possible only in lifecycle methods of class components.
+
+3. Custom Hooks:
+
+Reusability: Custom hooks allow you to extract and reuse stateful logic across multiple components.
+
+4. Performance:
+
+Hooks API: React's Hooks API can lead to more performant components by reducing the need for complex lifecycle methods and avoiding issues related to this.
+   Summary:
+
+Use Function Components with Hooks:
+
+For new projects and features, as they are simpler and more powerful with Hooks.
+
+When you need to manage state, side effects, and lifecycle methods in a cleaner and more readable way.
+
+To leverage custom hooks for reusable stateful logic.
+
+Use Class Components:
+
+In legacy codebases for consistency.
+
+For defining error boundaries until Hooks or a new API support this feature.
 
     **[⬆ Back to Top](#table-of-contents)**
 
