@@ -482,6 +482,7 @@ JSX: React uses JSX, which allows developers to write HTML-like syntax directly 
 Performance:
 
 Virtual DOM: React uses a virtual DOM to efficiently manage updates and rendering, which can result in better performance for dynamic applications.
+
 Component-Based Architecture: React's component-based architecture promotes the reuse of UI components, which can lead to cleaner and more maintainable code.
 Community and Ecosystem:
 
@@ -494,6 +495,7 @@ Hot Module Replacement: React's support for hot module replacement can significa
 
 
 Angular:
+
 Framework vs. Library:
 
 Angular is a full-fledged framework that provides a comprehensive solution for building web applications, including built-in tools for routing, state management, form handling, HTTP client, and more.
